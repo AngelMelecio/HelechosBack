@@ -1,12 +1,14 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
-from Empleados.models import Empleado
+from rest_framework.decorators import parser_classes
+from classes.models import Empleado
 from Empleados.serializers import EmpleadoSerializer
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
 @api_view(['GET','POST'])
+@parser_classes([MultiPartParser , JSONParser])
 def empleado_api_view(request):
-
     # list
     if request.method == 'GET':
         empleados = Empleado.objects.all()
@@ -22,13 +24,13 @@ def empleado_api_view(request):
         return Response( empleado_serializer.errors, status=status.HTTP_400_BAD_REQUEST )
 
 @api_view(['GET','PUT','DELETE'])
+@parser_classes([MultiPartParser, JSONParser])
 def empleado_detail_api_view(request, pk=None):
     # Queryset
-    empleado = Empleado.objects.filter( id = pk ).first()
+    empleado = Empleado.objects.filter( idEmpleado = pk ).first()
     
     # Validacion
     if empleado:
-
         # Retrieve
         if request.method == 'GET':
             empleado_serializer =  EmpleadoSerializer(empleado)
@@ -39,12 +41,12 @@ def empleado_detail_api_view(request, pk=None):
             empleado_serializer = EmpleadoSerializer(empleado, data = request.data)
             if empleado_serializer.is_valid():
                 empleado_serializer.save()
-                return Response(empleado_serializer.data, status=status.HTTP_200_OK)
+                return Response( {'message':'Empleado actualizado correctamente!.'}, status=status.HTTP_200_OK)
             return Response(empleado_serializer.errors, status = status.HTTP_400_BAD_REQUEST)
         
         # Delete
         elif request.method == 'DELETE':
-            empleado = Empleado.objects.filter( id = pk ).first()
+            empleado = Empleado.objects.filter( idEmpleado = pk ).first()
             empleado.delete()
             return Response(
                 {'message':'Empleado eliminado correctamente!.'}, 

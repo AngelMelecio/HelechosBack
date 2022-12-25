@@ -1,11 +1,13 @@
 from rest_framework import serializers
  
 # import the todo data model
-from .models import Empleado
+from classes.models import Empleado
  
 # create a serializer class
 class EmpleadoSerializer(serializers.ModelSerializer):
  
+    image_url = serializers.ImageField(required=False)
+
     # create a meta class
     class Meta:
         model = Empleado
