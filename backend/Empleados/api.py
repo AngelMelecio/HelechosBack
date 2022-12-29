@@ -20,7 +20,10 @@ def empleado_api_view(request):
         empleado_serializer = EmpleadoSerializer(data=request.data)
         if empleado_serializer.is_valid():
             empleado_serializer.save()
-            return Response( {'message':'Empleado creado correctamente!.'}, status=status.HTTP_201_CREATED )
+            return Response( {
+                'message':'Empleado creado correctamente!.',
+                'empleado': empleado_serializer.data
+            }, status=status.HTTP_201_CREATED )
         return Response( empleado_serializer.errors, status=status.HTTP_400_BAD_REQUEST )
 
 @api_view(['GET','PUT','DELETE'])

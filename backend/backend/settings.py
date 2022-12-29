@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Empleados',
+    'Maquinas',
+    'EmpleadoMaquina',
     'classes',
     'corsheaders',
     'rest_framework',

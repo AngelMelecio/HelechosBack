@@ -22,6 +22,9 @@ class Empleado(models.Model):
     departamento = models.CharField(max_length=200)
     tipo = models.CharField(max_length=200)
 
+    def __str__(self):
+        return "{} {}".format(self.nombre, self.apellidos)
+
 
 class Maquina(models.Model):
     idMaquina = models.AutoField(auto_created=True, primary_key=True)
@@ -30,8 +33,11 @@ class Maquina(models.Model):
     marca = models.CharField(max_length=60)
     ns = models.CharField(max_length=60)
     fechaAdquisicion = models.DateField()
-    otros = models.CharField(max_length=200)
+    otros = models.TextField(null=True, blank=True)
     departamento = models.CharField(max_length=20)
+
+    def __str__(self):
+        return "({}) {} {}".format(self.numero, self.linea, self.departamento)
 
 
 class Cliente(models.Model):
