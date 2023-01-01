@@ -19,10 +19,10 @@ class Empleado(models.Model):
     contrasena = models.CharField(max_length=200, null=True, blank=True)
     fotografia = models.ImageField(
         upload_to=upload_to, max_length=255, null=True, blank=True)
-    departamento = models.CharField(max_length=20,
+    tipo = models.CharField(max_length=20,
                                     choices=[('Trabajador', 'Trabajador'),('Encargado', 'Encargado'),('Administrador', 'Administrador')],
                                     default='Trabajador')
-    tipo = models.CharField(max_length=20,
+    departamento = models.CharField(max_length=20,
                             choices=[('Tejido', 'Tejido'),('Corte', 'Corte'),('Plancha', 'Plancha'),
                                     ('Empaque', 'Empaque'),('Transporte', 'Transporte'),('Diseno', 'Diseño'),('Gerencia', 'Gerencia')],
                             default='Tejido' )
@@ -39,7 +39,10 @@ class Maquina(models.Model):
     ns = models.CharField(max_length=60)
     fechaAdquisicion = models.DateField()
     otros = models.TextField(null=True, blank=True)
-    departamento = models.CharField(max_length=20)
+    departamento = models.CharField(max_length=20,
+                            choices=[('Tejido', 'Tejido'),('Corte', 'Corte'),('Plancha', 'Plancha'),
+                                    ('Empaque', 'Empaque'),('Transporte', 'Transporte'),('Diseno', 'Diseño'),('Gerencia', 'Gerencia')],
+                            default='Tejido' )
 
     def __str__(self):
         return "({}) {} {}".format(self.numero, self.linea, self.departamento)
